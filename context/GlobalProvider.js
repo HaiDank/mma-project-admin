@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { storeData, updateFavouriteList } from '../utils/db';
+import React, { createContext, useContext, useState } from 'react';
 
 const GlobalContext = createContext();
 

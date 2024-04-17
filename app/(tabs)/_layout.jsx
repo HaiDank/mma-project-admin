@@ -1,10 +1,4 @@
-import { View, Text, ScrollView } from 'react-native';
-import Animated, {
-	useSharedValue,
-	interpolate,
-	useAnimatedProps,
-	useAnimatedStyle
-} from 'react-native-reanimated';
+import { View, Text} from 'react-native';
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
