@@ -12,26 +12,21 @@ const StackLayout = () => {
 
 	useEffect(() => {
 		console.log('asdawd ', authState);
-		const isInAuthorizedScreen =
-			segments[0] === 'admin' || segments[0] === 'staff';
+		const isInAuthorizedScreen = segments[0] === '(tabs)';
 
 		if (!authState?.authenticated && isInAuthorizedScreen) {
 			router.replace('/sign-in');
 		} else if (authState?.authenticated) {
 			if (authState.role === 'admin') {
-				router.replace('/admin');
+				router.replace('(admin)/user');
 			}
 		}
-	}, [authState]);
+	}, [authState, segments]);
 
 	return (
 		<SafeAreaView className='flex-1 '>
 			<Stack>
-				<Stack.Screen
-					name='(protected)'
-					options={{ headerShown: false }}
-				/>
-
+				<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
 				<Stack.Screen name='(auth)' options={{ headerShown: false }} />
 				<Stack.Screen name='index' options={{ headerShown: false }} />
 			</Stack>

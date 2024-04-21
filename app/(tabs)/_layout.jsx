@@ -1,4 +1,4 @@
-import { View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 import React from 'react';
 import { Tabs } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -21,7 +21,6 @@ const TabIcon = ({ icon, color, name, focused }) => {
 };
 
 const TabsLayout = () => {
-
 	return (
 		<>
 			<Tabs
@@ -35,13 +34,9 @@ const TabsLayout = () => {
 						shadowOpacity: 0,
 					},
 					headerShown: true,
-					header: ({ options, route }) => (
-						<MyHeader  animation={headerAnimation}/>
-					),
 				}}
 			>
 				<Tabs.Screen
-
 					name='home'
 					options={{
 						title: 'Home',
@@ -56,28 +51,14 @@ const TabsLayout = () => {
 					}}
 				/>
 				<Tabs.Screen
-					name='shop'
+					name='(admin)/user'
 					options={{
-						title: 'Shop',
+						title: 'User',
 						tabBarIcon: ({ color, focused }) => (
 							<TabIcon
-								icon='shopping-bag'
+								icon='home'
 								color={color}
-								name='Favourite'
-								focused={focused}
-							/>
-						),
-					}}
-				/>
-				<Tabs.Screen
-					name='favourite'
-					options={{
-						title: 'Favourite',
-						tabBarIcon: ({ color, focused }) => (
-							<TabIcon
-								icon='heart'
-								color={color}
-								name='Favourite'
+								name='User'
 								focused={focused}
 							/>
 						),

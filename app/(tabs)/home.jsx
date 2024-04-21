@@ -9,11 +9,11 @@ const Home = () => {
 	}
 
 	return (
-		<FlatList className='flex-1 h-full' contentContainerStyle={{alignItems: 'center', justifyContent: 'center'}} onScroll={handleScroll}>
+		<View className='flex-1 h-full' >
 			<FontAwesome name='home' size={100} color='black' />
 			<Text>Home</Text>
 			<View className='h-[2000px]'></View>
-		</FlatList>
+		</View>
 	);
 };
 
