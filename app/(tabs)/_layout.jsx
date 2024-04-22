@@ -36,7 +36,7 @@ const TabsLayout = () => {
 						height: 60,
 						shadowOpacity: 0,
 					},
-					headerShown: true,
+					headerShown: false,
 				}}
 			>
 				<Tabs.Screen

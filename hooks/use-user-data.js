@@ -2,7 +2,7 @@ import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
 import { getUsers } from '../api/user';
 
-export const useUserData = (page, per_page, sortBy, sortDir, email, role, gender) => {
+export const useUserData = (page, per_page, sortBy='name', sortDir='ASC', email='', role='CUSTOMER', gender='') => {
 	const { authState } = useAuthContext();
 	const { token } = authState;
 
@@ -11,7 +11,7 @@ export const useUserData = (page, per_page, sortBy, sortDir, email, role, gender
 			'users',
 			page,
 			per_page,
-			sortBy,
+			sortBy ,
 			sortDir,
 			email,
 			role,

@@ -8,6 +8,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ActivityIndicator } from 'react-native';
 import { Loader } from '../components';
+import { PaperProvider } from 'react-native-paper';
 
 const queryClient = new QueryClient();
 
@@ -17,6 +18,7 @@ const StackLayout = () => {
 	const router = useRouter();
 
 	useEffect(() => {
+		console.log(' auth ', authState.token)
 		const isInAuthorizedScreen = segments[0] === '(tabs)';
 
 		if (!authState?.authenticated && isInAuthorizedScreen) {
@@ -31,7 +33,10 @@ const StackLayout = () => {
 	useEffect(() => {
 		const isInAuthorizedScreen = segments[0] === '(tabs)';
 		if (!authState?.authenticated && isInAuthorizedScreen) {
-			router.replace('/sign-in');
+			router.replace({
+				pathname: "/sign-in",
+				params: { error: 'Please log in to access the app!' }
+			  });
 		}
 	}, [segments]);
 
@@ -50,13 +55,15 @@ const StackLayout = () => {
 const RootLayout = () => {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<GlobalProvider>
-				<AuthProvider>
-					<GluestackUIProvider>
-						<StackLayout />
-					</GluestackUIProvider>
-				</AuthProvider>
-			</GlobalProvider>
+			<PaperProvider>
+				<GlobalProvider>
+					<AuthProvider>
+						<GluestackUIProvider>
+							<StackLayout />
+						</GluestackUIProvider>
+					</AuthProvider>
+				</GlobalProvider>
+			</PaperProvider>
 		</QueryClientProvider>
 	);
 };

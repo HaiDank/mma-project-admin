@@ -49,6 +49,7 @@ const AuthProvider = ({ children }) => {
 				token: result.metadata.access_token,
 				refreshToken: result.metadata.refresh_token,
 			});
+			console.log('login ', authState.token)
 		}
 		setLoading(false);
 	};

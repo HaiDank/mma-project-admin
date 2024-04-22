@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from 'react-native';
 import React from 'react';
 
-const MyButton = ({ children, className, onPress }) => {
+const MyButton = ({ children, style, onPress }) => {
 	const handleOnPress = () => {
 		if (onPress) {
 			onPress();
@@ -11,7 +11,17 @@ const MyButton = ({ children, className, onPress }) => {
 	return (
 		<Pressable
 			onPress={handleOnPress}
-			className={`${className} flex items-center justify-center w-12 h-12`}
+			style={({ pressed }) => [
+				{
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					backgroundColor: pressed
+						? 'rgba(50,50,50,0.4)'
+						: 'rgba(50,50,50,0)',
+				},
+				style
+			]}
 		>
 			{children}
 		</Pressable>

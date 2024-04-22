@@ -4,10 +4,12 @@ import TabHeader from './TabHeader'
 
 const Layout = ({children}) => {
   return (
-    <View className='ralative flex-1 w-full '>
-      <Text>Layout</Text>
+    <View className='flex-1 w-full ralative '>
       <TabHeader />
+
+      <View className='flex-1 w-full p-4 mt-16'>
       {children}
+      </View>
     </View>
   )
 }

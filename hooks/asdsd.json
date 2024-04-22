@@ -4,7 +4,7 @@
             "xhr",
             "http"
         ],
-        "data": "{\"email\":\"admin@gmail.com\",\"password\":\"admin\"}",
+        "data": undefined,
         "env": {
             "Blob": [Function Blob
             ],
@@ -15,7 +15,7 @@
         ],
         "maxBodyLength": -1,
         "maxContentLength": -1,
-        "method": "post",
+        "method": "get",
         "timeout": 0,
         "transformRequest": [
             [Function transformRequest
@@ -30,7 +30,7 @@
             "forcedJSONParsing": true,
             "silentJSONParsing": true
         },
-        "url": "https://orchid-be.azurewebsites.net/api/v1/auth/login",
+        "url": "https://orchid-be.azurewebsites.net/api/v1/users?page=0&per_page=2&sortBy=name&sortDir=ASC&email=&role=STAFF&gender=",
         "validateStatus": [Function validateStatus
         ],
         "xsrfCookieName": "XSRF-TOKEN",
@@ -38,21 +38,23 @@
     },
     "data": {
         "error": null,
-        "message": "login_successfully",
-        "metadata": {
-            "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwiZXhwIjoxNzEzNzkwMDI4fQ.nq8XlJXRtFmhlM09zCeAW2G4RU-GcCKRrA91GrL99f8",
-            "refresh_token": "9a272d20-0316-458f-8942-ceeae25347ec",
-            "tokenType": "Bearer"
-        },
+        "message": null,
+        "metadata": null,
         "payload": {
-            "banned": false,
-            "dob": "2003-10-11T17:00:00",
-            "email": "admin@gmail.com",
-            "gender": "MALE",
-            "id": 1,
-            "img": null,
-            "name": "admin",
-            "role": "ADMIN"
+            "content": [Array
+            ],
+            "empty": true,
+            "first": true,
+            "last": true,
+            "number": 0,
+            "numberOfElements": 0,
+            "pageable": [Object
+            ],
+            "size": 2,
+            "sort": [Object
+            ],
+            "totalElements": 0,
+            "totalPages": 0
         },
         "status": "SUCCESS"
     },
@@ -64,62 +66,95 @@
         "access-control-max-age": "3600",
         "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
         "content-type": "application/json",
-        "date": "Sun, 21 Apr 2024 12: 47: 09 GMT", "expires": "0", "pragma": "no-cache", "strict-transport-security": "max-age=31536000 ; includeSubDomains", "transfer-encoding": "chunked", "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers", "x-content-type-options": "nosniff", "x-frame-options": "DENY", "x-xss-protection": "0"}, "request": {"DONE": 4, "HEADERS_RECEIVED": 2, "LOADING": 3, "OPENED": 1, "UNSENT": 0, "_aborted": false, "_cachedResponse": undefined, "_hasError": false, "_headers": {"accept": "application/json, text/plain,
-        ", "content-type": "application/json"}, "_incrementalEvents": false, "_lowerCaseResponseHeaders": {"access-control-allow-headers": "authorization, content-type, xsrf-token", "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS", "access-control-allow-origin": "*", "access-control-expose-headers": "xsrf-token", "access-control-max-age": "3600", "cache-control": "no-cache, no-store, max-age=0, must-revalidate", "content-type": "application/json", "date": "Sun,
-        21 Apr 2024 12: 47: 09 GMT", "expires": "0", "pragma": "no-cache", "strict-transport-security": "max-age=31536000 ; includeSubDomains",
+        "date": "Mon, 22 Apr 2024 08:45:05 GMT",
+        "expires": "0",
+        "pragma": "no-cache",
+        "strict-transport-security": "max-age=31536000 ; includeSubDomains",
         "transfer-encoding": "chunked",
         "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
         "x-content-type-options": "nosniff",
         "x-frame-options": "DENY",
         "x-xss-protection": "0"
     },
-    "_method": "POST",
-    "_perfKey": "network_XMLHttpRequest_https://orchid-be.azurewebsites.net/api/v1/auth/login",
-    "_performanceLogger": {
-        "_closed": false,
-        "_extras": [Object
-        ],
-        "_isGlobalLogger": true,
-        "_pointExtras": [Object
-        ],
-        "_points": [Object
-        ],
-        "_timespans": [Object
-        ]
+    "request": {
+        "DONE": 4,
+        "HEADERS_RECEIVED": 2,
+        "LOADING": 3,
+        "OPENED": 1,
+        "UNSENT": 0,
+        "_aborted": false,
+        "_cachedResponse": undefined,
+        "_hasError": false,
+        "_headers": {
+            "accept": "application/json, text/plain, */*",
+            "authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwiZXhwIjoxNzEzODYxMDgxfQ.l7lSkm5Mhnq7mF5cSVhzCb2kTxgR_5azxURb6XkGezY"
+        },
+        "_incrementalEvents": false,
+        "_lowerCaseResponseHeaders": {
+            "access-control-allow-headers": "authorization, content-type, xsrf-token",
+            "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "access-control-allow-origin": "*",
+            "access-control-expose-headers": "xsrf-token",
+            "access-control-max-age": "3600",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "content-type": "application/json",
+            "date": "Mon, 22 Apr 2024 08:45:05 GMT",
+            "expires": "0",
+            "pragma": "no-cache",
+            "strict-transport-security": "max-age=31536000 ; includeSubDomains",
+            "transfer-encoding": "chunked",
+            "vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+            "x-content-type-options": "nosniff",
+            "x-frame-options": "DENY",
+            "x-xss-protection": "0"
+        },
+        "_method": "GET",
+        "_perfKey": "network_XMLHttpRequest_https://orchid-be.azurewebsites.net/api/v1/users?page=0&per_page=2&sortBy=name&sortDir=ASC&email=&role=STAFF&gender=",
+        "_performanceLogger": {
+            "_closed": false,
+            "_extras": [Object
+            ],
+            "_isGlobalLogger": true,
+            "_pointExtras": [Object
+            ],
+            "_points": [Object
+            ],
+            "_timespans": [Object
+            ]
+        },
+        "_requestId": null,
+        "_response": "{\"status\":\"SUCCESS\",\"payload\":{\"content\":[],\"pageable\":{\"pageNumber\":0,\"pageSize\":2,\"sort\":{\"empty\":false,\"sorted\":true,\"unsorted\":false},\"offset\":0,\"paged\":true,\"unpaged\":false},\"totalElements\":0,\"totalPages\":0,\"last\":true,\"size\":2,\"number\":0,\"sort\":{\"empty\":false,\"sorted\":true,\"unsorted\":false},\"numberOfElements\":0,\"first\":true,\"empty\":true},\"error\":null,\"metadata\":null,\"message\":null}",
+        "_responseType": "",
+        "_sent": true,
+        "_subscriptions": [],
+        "_timedOut": false,
+        "_trackingName": "unknown",
+        "_url": "https://orchid-be.azurewebsites.net/api/v1/users?page=0&per_page=2&sortBy=name&sortDir=ASC&email=&role=STAFF&gender=",
+        "readyState": 4,
+        "responseHeaders": {
+            "Access-Control-Allow-Headers": "authorization, content-type, xsrf-token",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Expose-Headers": "xsrf-token",
+            "Access-Control-Max-Age": "3600",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Content-Type": "application/json",
+            "Date": "Mon, 22 Apr 2024 08:45:05 GMT",
+            "Expires": "0",
+            "Pragma": "no-cache",
+            "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+            "Transfer-Encoding": "chunked",
+            "Vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
+            "X-Content-Type-Options": "nosniff",
+            "X-Frame-Options": "DENY",
+            "X-XSS-Protection": "0"
+        },
+        "responseURL": "https://orchid-be.azurewebsites.net/api/v1/users?page=0&per_page=2&sortBy=name&sortDir=ASC&email=&role=STAFF&gender=",
+        "status": 200,
+        "timeout": 0,
+        "upload": {},
+        "withCredentials": true
     },
-    "_requestId": null,
-    "_response": "{\"status\":\"SUCCESS\",\"payload\":{\"id\":1,\"name\":\"admin\",\"email\":\"admin@gmail.com\",\"img\":null,\"role\":\"ADMIN\",\"dob\":\"2003-10-11T17:00:00\",\"gender\":\"MALE\",\"banned\":false},\"error\":null,\"metadata\":{\"access_token\":\"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwiZXhwIjoxNzEzNzkwMDI4fQ.nq8XlJXRtFmhlM09zCeAW2G4RU-GcCKRrA91GrL99f8\",\"refresh_token\":\"9a272d20-0316-458f-8942-ceeae25347ec\",\"tokenType\":\"Bearer\"},\"message\":\"login_successfully\"}",
-    "_responseType": "",
-    "_sent": true,
-    "_subscriptions": [],
-    "_timedOut": false,
-    "_trackingName": "unknown",
-    "_url": "https://orchid-be.azurewebsites.net/api/v1/auth/login",
-    "readyState": 4,
-    "responseHeaders": {
-        "Access-Control-Allow-Headers": "authorization, content-type, xsrf-token",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Expose-Headers": "xsrf-token",
-        "Access-Control-Max-Age": "3600",
-        "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-        "Content-Type": "application/json",
-        "Date": "Sun, 21 Apr 2024 12:47:09 GMT",
-        "Expires": "0",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
-        "Transfer-Encoding": "chunked",
-        "Vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "DENY",
-        "X-XSS-Protection": "0"
-    },
-    "responseURL": "https://orchid-be.azurewebsites.net/api/v1/auth/login",
     "status": 200,
-    "timeout": 0,
-    "upload": {},
-    "withCredentials": true
-},
-"status": 200,
-"statusText": undefined
+    "statusText": undefined
 }

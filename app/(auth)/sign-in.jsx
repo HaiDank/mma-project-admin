@@ -11,15 +11,18 @@ import {
 } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { login } from '../../api/auth';
 import { useAuthContext } from '../../context/AuthContext';
 
 const SignIn = () => {
+
+	const {error} = useLocalSearchParams()
+
 	const [showPassword, setShowPassword] = useState(false);
 	const [email, setEmail] = useState();
 	const [password, setPassword] = useState('');
-	const [errorMsg, setErrorMsg] = useState('');
+	const [errorMsg, setErrorMsg] = useState(error ? error : '');
 
 	const passwordInputRef = useRef();
 	const emailInputRef = useRef();
