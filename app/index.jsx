@@ -7,8 +7,8 @@ export default function App() {
 	const { authState } = useAuthContext();
 
 	const redirectRoute = authState?.authenticated
-		? authState.role === 'admin'
-			? '(admin)'
+		? authState.role === 'ADMIN'
+			? '(admin)/home'
 			: '(staff)'
 		: 'sign-in';
 

@@ -2,14 +2,13 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import Layout from '../../../components/Layout'
 
-const UserDataScreen = () => {
+const Product = () => {
   return (
     <Layout>
-      <Text>
-        asdawuser
-      </Text>
+
+      <Text>product</Text>
     </Layout>
   )
 }
 
-export default UserDataScreen
+export default Product

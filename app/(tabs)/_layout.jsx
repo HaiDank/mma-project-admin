@@ -3,16 +3,19 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+
 
 const TabIcon = ({ icon, color, name, focused }) => {
 	return (
 		<View className='flex items-center justify-center duration-500 transition-color'>
-			<Feather name={icon} size={24} color={color} />
+			{icon}
 			<Text
 				className={`${
-					focused ? 'font-semibold' : 'font-normal'
+					focused ? 'font-semibold text-green-700' : 'font-normal text-neutral-500'
 				} text-xs duration-500 transition-color`}
-				style={{ color: color }}
 			>
 				{name}
 			</Text>
@@ -37,12 +40,19 @@ const TabsLayout = () => {
 				}}
 			>
 				<Tabs.Screen
-					name='home'
+					name='(admin)/home'
 					options={{
 						title: 'Home',
+						href: null,
 						tabBarIcon: ({ color, focused }) => (
 							<TabIcon
-								icon='home'
+								icon={
+									<AntDesign
+										name='home'
+										size={24}
+										color={color}
+									/>
+								}
 								color={color}
 								name='Home'
 								focused={focused}
@@ -56,9 +66,83 @@ const TabsLayout = () => {
 						title: 'User',
 						tabBarIcon: ({ color, focused }) => (
 							<TabIcon
-								icon='home'
+								icon={
+									<AntDesign
+										name='user'
+										size={24}
+										color={color}
+									/>
+								}
 								color={color}
 								name='User'
+								focused={focused}
+							/>
+						),
+					}}
+				/>
+				<Tabs.Screen
+					name='(admin)/product'
+					options={{
+						title: 'Product',
+						tabBarIcon: ({ color, focused }) => (
+							<TabIcon
+								icon={
+									<Feather
+										name='inbox'
+										size={24}
+										color={color}
+									/>
+								}
+								color={color}
+								name='Product'
+								focused={focused}
+							/>
+						),
+					}}
+				/>
+				<Tabs.Screen
+					name='(admin)/transaction'
+					options={{
+						title: 'Transaction',
+						tabBarIcon: ({ color, focused }) => (
+							<TabIcon
+								icon={
+									<MaterialIcons
+										name='attach-money'
+										size={24}
+										color={color}
+									/>
+								}
+								color={color}
+								name='Transaction'
+								focused={focused}
+							/>
+						),
+					}}
+				/>
+				<Tabs.Screen
+					name='(admin)/auction'
+					options={{
+						title: 'Auction',
+						tabBarIcon: ({ color, focused }) => (
+							<TabIcon
+								icon={<FontAwesome5 name="comments-dollar" size={24} color={color} />}
+								color={color}
+								name='Auction'
+								focused={focused}
+							/>
+						),
+					}}
+				/>
+				<Tabs.Screen
+					name='(admin)/order'
+					options={{
+						title: 'Order',
+						tabBarIcon: ({ color, focused }) => (
+							<TabIcon
+								icon={<Feather name="clipboard" size={24} color={color} />}
+								color={color}
+								name='Order'
 								focused={focused}
 							/>
 						),

@@ -6,7 +6,7 @@ export const useGlobalContext = () => useContext(GlobalContext);
 
 const GlobalProvider = ({ children }) => {
 	
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 
 
 
