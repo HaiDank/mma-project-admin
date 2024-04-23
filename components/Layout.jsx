@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React from 'react'
 import TabHeader from './TabHeader'
 
@@ -7,9 +7,9 @@ const Layout = ({children}) => {
     <View className='flex-1 w-full ralative '>
       <TabHeader />
 
-      <View className='flex-1 w-full p-4 mt-16'>
+      <ScrollView className='flex-1 w-full p-4 mt-16 '>
       {children}
-      </View>
+      </ScrollView>
     </View>
   )
 }

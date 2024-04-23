@@ -1,13 +1,8 @@
-import {
-	keepPreviousData,
-	useMutation,
-	useQuery,
-	useQueryClient,
-} from '@tanstack/react-query';
-import { useAuthContext } from '../context/AuthContext';
-import { deleteUser, getUserById, getUsers } from '../api/user';
+import { keepPreviousData, useQueryClient } from "@tanstack/react-query";
+import { useAuthContext } from "../context/AuthContext";
+import { fetchAuctions } from "../api/auction";
 
-export const useUserData = (
+export const useAuctionData = (
 	page,
 	per_page,
 	sortBy = 'name',
@@ -21,25 +16,19 @@ export const useUserData = (
 
 	return useQuery({
 		queryKey: [
-			'users',
+			'auctions',
 			page,
 			per_page,
 			sortBy,
 			sortDir,
-			email,
-			role,
-			gender,
 		],
 		queryFn: () =>
-			getUsers(
+			fetchAuctions(
 				token,
 				page,
 				per_page,
 				sortBy,
 				sortDir,
-				email,
-				role,
-				gender
 			),
 		placeholderData: keepPreviousData,
 		enabled: !!token,
@@ -47,29 +36,29 @@ export const useUserData = (
 	});
 };
 
-export const useOneUserData = (id) => {
+export const useOneAuctionData = (id) => {
 	const { authState } = useAuthContext();
 	const { token } = authState;
 
 	return useQuery({
-		queryKey: ['user', id],
-		queryFn: () => getUserById(token, id),
+		queryKey: ['auction', id],
+		queryFn: () => getAuctionById(token, id),
 		placeholderData: keepPreviousData,
 		enabled: !!token,
 		staleTime: 360000,
 	});
 };
 
-export const useDeleteUser = (id) => {
+export const useDeleteAuction = () => {
 	const { authState } = useAuthContext();
 
 	const queryClient = useQueryClient();
 	const { token } = authState;
 
 	return useMutation({
-		mutationFn: ({ id }) => deleteUser(token, id),
+		mutationFn: ({ id }) => deleteAuction(token, id),
 		onSuccess: (data, variables, context) => {
-			queryClient.invalidateQueries({ queryKey: ['users'] });
+			queryClient.invalidateQueries({ queryKey: ['auctions'] });
 		},
 	});
 };

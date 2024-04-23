@@ -30,7 +30,7 @@ export const getUsers = async (
 			}
 		)
 		.then((res) => {
-			console.log('asdaw ', res.data);
+			console.log('asdaw ', res.data.payload.content);
 			return res.data.payload;
 		})
 		.catch((err) => {
@@ -41,12 +41,16 @@ export const getUsers = async (
 	return result;
 };
 
-export const getUserById = async (id) => {
+export const getUserById = async (token, id) => {
 	const result = await axios
-		.get(BASE_URL + GET_USER_BY_ID_URL + id)
+		.get(BASE_URL + GET_USER_BY_ID_URL + id, {
+			headers: {
+				Authorization: 'Bearer ' + token
+			}
+		})
 		.then((res) => {
-			console.log(res);
-			return res;
+			console.log(res.data.payload);
+			return res.data;
 		})
 		.catch((err) => {
 			console.log(err);
@@ -86,9 +90,13 @@ export const updateUser = async ({
 	return result;
 };
 
-export const deleteUser = async (id) => {
+export const deleteUser = async (token, id) => {
 	const result = await axios
-		.delete(BASE_URL + DELETE_USER_URL + id)
+		.delete(BASE_URL + DELETE_USER_URL + id, {
+			headers: {
+				Authorization: 'Bearer ' + token
+			}
+		})
 		.then((res) => {
 			console.log(res);
 			return res;

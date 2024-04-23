@@ -79,7 +79,7 @@ const SignIn = () => {
 			<ScrollView className='flex-1 w-full px-4 bg-white gap-y-4'>
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 					<Text className='w-full py-4 text-3xl font-semibold text-center'>
-						Orchid
+						Orchid Dashboard
 					</Text>
 				</TouchableWithoutFeedback>
 
@@ -131,7 +131,7 @@ const SignIn = () => {
 							Sign in
 						</Text>
 					</Pressable>
-					<Pressable
+					{/* <Pressable
 						onPress={() => {
 							router.navigate('/sign-up');
 						}}
@@ -140,7 +140,7 @@ const SignIn = () => {
 						<Text className='text-lg font-semibold text-black'>
 							Sign up
 						</Text>
-					</Pressable>
+					</Pressable> */}
 				</View>
 			</ScrollView>
 		</KeyboardAvoidingView>

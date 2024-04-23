@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { GluestackUIProvider } from '@gluestack-ui/themed';
 import { Stack, useRouter, useSegments } from 'expo-router';
-import GlobalProvider from '../context/GlobalProvider';
+import GlobalProvider, { useGlobalContext } from '../context/GlobalProvider';
 import AuthProvider, { useAuthContext } from '../context/AuthContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -14,6 +14,7 @@ const queryClient = new QueryClient();
 
 const StackLayout = () => {
 	const { authState } = useAuthContext();
+	const {loading} = useGlobalContext()
 	const segments = useSegments();
 	const router = useRouter();
 
@@ -22,7 +23,7 @@ const StackLayout = () => {
 		const isInAuthorizedScreen = segments[0] === '(tabs)';
 
 		if (!authState?.authenticated && isInAuthorizedScreen) {
-			router.push('/sign-in');
+			router.replace('/sign-in');
 		} else if (authState?.authenticated) {
 			if (authState.role === 'ADMIN') {
 				router.replace('(admin)/home');
@@ -42,7 +43,7 @@ const StackLayout = () => {
 
 	return (
 		<SafeAreaView className='flex-1 '>
-			<Loader />
+			<Loader loading={loading} />
 			<Stack>
 				<Stack.Screen name='(tabs)' options={{ headerShown: false }} />
 				<Stack.Screen name='(auth)' options={{ headerShown: false }} />

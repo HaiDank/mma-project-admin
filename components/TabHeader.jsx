@@ -2,19 +2,21 @@ import { View, Text, Modal, TouchableOpacity, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import RoundedButton from './RoundedButton';
-import { router } from 'expo-router';
+import { router, useSegments } from 'expo-router';
 import { useAuthContext } from '../context/AuthContext';
 import MyButton from './MyButton';
+import { BlurView } from 'expo-blur';
 
 const TabHeader = () => {
 	const { logout } = useAuthContext();
+	const segments = useSegments();
 
 	const [openUserModal, setOpenUserModal] = useState(false);
 
 	const handleLogout = () => {
-		setOpenUserModal(false)
-		logout()
-	}
+		setOpenUserModal(false);
+		logout();
+	};
 
 	return (
 		<>
@@ -42,8 +44,11 @@ const TabHeader = () => {
 							</MyButton>
 						</View>
 						<View className='p-4'>
-							<Pressable className='w-full h-12 ' onPress={handleLogout}>
-								<Text className='text-lg text-blue-600 underline'>
+							<Pressable
+								className='w-full h-12 '
+								onPress={handleLogout}
+							>
+								<Text className='text-xl font-semibold text-blue-600 underline'>
 									Log out
 								</Text>
 							</Pressable>
@@ -52,33 +57,34 @@ const TabHeader = () => {
 				</TouchableOpacity>
 			</Modal>
 
-			<View className='absolute top-0 left-0 flex flex-row items-center w-full h-16 px-4 '>
+			<BlurView
+				intensity={100}
+				className='absolute top-0 left-0 flex flex-row items-center w-full h-16 px-4 '
+			>
 				<RoundedButton
+					normalColor='rgba(0,0,0,0.7)'
+					pressColor='rgba(0,0,0,0.5)'
+					color
 					onPress={() => {
 						setOpenUserModal(true);
 					}}
 				>
-					<Feather name='user' size={24} color='black' />
+					<Feather name='user' size={24} color='white' />
 				</RoundedButton>
-			</View>
-			<View className='absolute z-10 flex items-center justify-center bottom-4 right-4'>
-				<RoundedButton
-					onPress={() => {
-						router.push('(admin)/home');
-					}}
-				>
-					<Feather name='home' size={32} color='black' />
-				</RoundedButton>
-			</View>
-			<View className='absolute z-10 flex items-center justify-center bottom-4 right-20'>
-				<RoundedButton
-					onPress={() => {
-						logout();
-					}}
-				>
-					<Feather name='home' size={32} color='black' />
-				</RoundedButton>
-			</View>
+			</BlurView>
+			{segments[2] === 'home' ? (
+				''
+			) : (
+				<View className='absolute z-10 flex items-center justify-center bottom-4 right-4'>
+					<RoundedButton
+						onPress={() => {
+							router.push('(admin)/home');
+						}}
+					>
+						<Feather name='home' size={32} color='black' />
+					</RoundedButton>
+				</View>
+			)}
 		</>
 	);
 };

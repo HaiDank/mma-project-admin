@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 
 
 const TabIcon = ({ icon, color, name, focused }) => {
@@ -28,16 +29,23 @@ const TabsLayout = () => {
 		<>
 			<Tabs
 				screenOptions={{
+					tabBarHideOnKeyboard: true,
 					tabBarActiveTintColor: '#000',
 					tabBarInactiveTintColor: '#888',
 					tabBarShowLabel: false,
 					tabBarStyle: {
 						backgroundColor: '#efefef',
-						height: 60,
+						height: 70,
 						shadowOpacity: 0,
+						borderTopWidth:0,
+						elevation: 0
 					},
 					headerShown: false,
+					tabBarBackground: ()=>{
+						<BlurView className='bg-black/5'></BlurView>
+					}
 				}}
+				initialRouteName='(admin)/home'
 			>
 				<Tabs.Screen
 					name='(admin)/home'
@@ -135,7 +143,7 @@ const TabsLayout = () => {
 					}}
 				/>
 				<Tabs.Screen
-					name='(admin)/order'
+					name='(admin)/order/index'
 					options={{
 						title: 'Order',
 						tabBarIcon: ({ color, focused }) => (

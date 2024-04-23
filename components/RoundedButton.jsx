@@ -1,7 +1,14 @@
 import { View, Text, Pressable } from 'react-native';
 import React from 'react';
 
-const RoundedButton = ({ children, size = 'md', onPress }) => {
+const RoundedButton = ({
+	children,
+	size = 'md',
+	onPress,
+	style,
+	pressColor = 'rgba(50,50,50,0.8)',
+	normalColor = 'rgba(50,50,50,0.2)',
+}) => {
 	let width = 48;
 	let height = 48;
 
@@ -15,14 +22,14 @@ const RoundedButton = ({ children, size = 'md', onPress }) => {
 	}
 
 	const handleOnPress = () => {
-		if(onPress){
-			onPress()
+		if (onPress) {
+			onPress();
 		}
-	}
+	};
 
 	return (
 		<Pressable
-		onPress={handleOnPress}
+			onPress={handleOnPress}
 			style={({ pressed }) => [
 				{
 					borderRadius: 1000,
@@ -31,11 +38,9 @@ const RoundedButton = ({ children, size = 'md', onPress }) => {
 					justifyContent: 'center',
 					width: width,
 					height: height,
-
-					backgroundColor: pressed
-						? 'rgba(50,50,50,0.9)'
-						: 'rgba(50,50,50,0.4)',
+					backgroundColor: pressed ? pressColor : normalColor,
 				},
+				style,
 			]}
 		>
 			{children}
