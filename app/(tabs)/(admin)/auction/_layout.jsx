@@ -4,9 +4,10 @@ import { Stack } from 'expo-router'
 
 const AuctionLayout = () => {
   return (
-    <Stack>
+    <Stack initialRouteName='index'>
         <Stack.Screen name='index' options={{headerShown: false}}/>
-        <Stack.Screen name='[id]' options={{headerShown: true}}/>
+        <Stack.Screen name='[id]' options={{headerShown: true , title: 'Auction Details'}}/>
+        <Stack.Screen name='create-auction' options={{headerShown: true , title: 'Create Auction'}}/>
     </Stack>
   )
 }

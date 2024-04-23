@@ -20,8 +20,8 @@ export const fetchAuctions = async (token, page, per_page, sortBy, sortDir) => {
 			}
 		)
 		.then((res) => {
-			console.log(res);
-			return res;
+			console.log('get uaction', res.data.payload);
+			return res.data.payload;
 		})
 		.catch((err) => {
 			console.log(err);
@@ -36,8 +36,7 @@ export const fetchAuctionById = async (token, id) => {
 			headers: { Authorization: 'Bearer ' + token },
 		})
 		.then((res) => {
-			console.log(res);
-			return res;
+			return res.data;
 		})
 		.catch((err) => {
 			console.log(err);
@@ -46,13 +45,14 @@ export const fetchAuctionById = async (token, id) => {
 	return result;
 };
 
-export const deleteAunction = async (token, id) => {
+export const deleteAuction = async (token, id) => {
+	console.log('deleting auction', id);
 	const result = await axios
 		.delete(BASE_URL + DELETE_AUCTION_URL + id, {
 			headers: { Authorization: 'Bearer ' + token },
 		})
 		.then((res) => {
-			console.log(res);
+			console.log(res.data);
 			return res;
 		})
 		.catch((err) => {
@@ -91,22 +91,25 @@ export const createAuction = async (
 	title,
 	depositPrice,
 	quantity,
-	startPRice,
+	startPrice,
 	remindAt,
+	productID,
 	image_url
 ) => {
+	
 	const result = await axios
 		.post(
 			BASE_URL + POST_CREATE_AUCTION_URL,
 			{
-				endDate,
-				startDate,
-				title,
-				depositPrice,
-				quantity,
-				startPRice,
-				remindAt,
-				image_url,
+				endDate: endDate,
+				startDate: startDate,
+				title: title,
+				depositPrice: +depositPrice,
+				quantity: +quantity,
+				startPrice: +startPrice,
+				remindAt: remindAt,
+				image_url: image_url,
+				productID: +productID,
 			},
 			{
 				headers: {

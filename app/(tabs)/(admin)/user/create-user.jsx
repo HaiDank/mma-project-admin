@@ -166,7 +166,7 @@ const CreateUser = () => {
 						className='p-4 text-lg font-medium border border-white rounded-xl focus:border-black bg-neutral-200 focus:bg-transparent'
 					></TextInput>
 					<Pressable
-						onPress={handleState}
+						onPress={()=>{setShowConfirmPassword(prev => !prev)}}
 						className='absolute z-10 p-3 right-2 top-2'
 					>
 						{showConfirmPassword ? (

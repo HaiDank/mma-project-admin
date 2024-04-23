@@ -12,8 +12,6 @@ const UserDetails = () => {
 
 	const { data, error, status } = useOneUserData(id);
 
-	console.log(data);
-
 	const handleConfirmDelete = () => {
 		Alert.alert(
 			'',
@@ -33,7 +31,7 @@ const UserDetails = () => {
 	};
 
 	const handleDelete = () => {
-		deleteUser(id);
+		deleteUser({id});
 		router.back();
 	};
 

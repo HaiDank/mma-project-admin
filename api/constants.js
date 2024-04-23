@@ -26,3 +26,6 @@ export const PUT_UPDATE_AUCTION_URL = 'auctions/' // + id
 export const DELETE_AUCTION_URL = 'auctions/' // + id
 export const POST_REGISTER_AUCTION_BY_ID = 'auctions/register-by-auctionId/' // + id
 export const POST_CREATE_AUCTION_URL = 'auctions/create' // + id
+
+export const GET_ORDERS_URL = 'orders/list'
+export const GET_ORDER_BY_ID_URL = 'orders/' // + id

@@ -42,18 +42,18 @@ const Transaction = () => {
     console.log(updatedList);
   };
 
-  const handleDelete = () => {
-    console.log(selectedList);
-    if (selectedAll) {
-      data?.content.forEach((item) => {
-        deleteProduct(id);
-      });
-    } else if (selectedList?.length > 0) {
-      selectedList.forEach((item) => deleteProduct(item));
-    }
-    setSelectedAll(false);
-    setSelectedList([]);
-  };
+  // const handleDelete = () => {
+  //   console.log(selectedList);
+  //   if (selectedAll) {
+  //     data?.content.forEach((item) => {
+  //       deleteProduct(id);
+  //     });
+  //   } else if (selectedList?.length > 0) {
+  //     selectedList.forEach((item) => deleteProduct(item));
+  //   }
+  //   setSelectedAll(false);
+  //   setSelectedList([]);
+  // };
 
   const handleConfirmDelete = () => {
     console.log(selectedList);
