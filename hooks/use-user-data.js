@@ -5,7 +5,7 @@ import {
 	useQueryClient,
 } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
-import { deleteUser, getUserById, getUsers } from '../api/user';
+import { deleteUser, getUserById, getUsers, registerUser } from '../api/user';
 
 export const useUserData = (
 	page,
@@ -69,6 +69,22 @@ export const useDeleteUser = () => {
 	return useMutation({
 		mutationFn: ({ id }) => deleteUser(token, id),
 		onSuccess: (data, variables, context) => {
+			queryClient.invalidateQueries({ queryKey: ['users'] });
+		},
+	});
+};
+
+export const useCreateUser = () => {
+	const { authState } = useAuthContext();
+
+	const queryClient = useQueryClient();
+	const { token } = authState;
+
+	return useMutation({
+		mutationFn: ({ email, password, name, dob, gender, image_url }) =>
+			registerUser(email, password, name, dob, gender, false, image_url),
+		onSuccess: (data, variables, context) => {
+			console.log('adding' ,variables)
 			queryClient.invalidateQueries({ queryKey: ['users'] });
 		},
 	});

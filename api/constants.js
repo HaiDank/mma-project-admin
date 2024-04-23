@@ -22,7 +22,7 @@ export const GET_TRANSACTION_URL = 'transactions'
 
 export const GET_AUCTIONS_URL = 'auctions/list'
 export const GET_AUCTION_BY_ID_URL = 'auctions/' // + id
-export const PUT_UPDATE_AUCTION_URL = 'auctions/' // + id
+export const PUT_UPDATE_AUCTION_URL = 'auctions/update-auction/' // + id
 export const DELETE_AUCTION_URL = 'auctions/' // + id
 export const POST_REGISTER_AUCTION_BY_ID = 'auctions/register-by-auctionId/' // + id
 export const POST_CREATE_AUCTION_URL = 'auctions/create' // + id

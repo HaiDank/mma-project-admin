@@ -182,6 +182,7 @@ const CreateAuction = () => {
 				productID,
 				image_url,
 			});
+			router.back()
 		}
 	};
 
@@ -351,7 +352,7 @@ const CreateAuction = () => {
 							className='flex items-center justify-center flex-1 px-4 py-2 mb-4 border rounded-full'
 						>
 							<Text className='text-lg font-semibold text-green-700'>
-								Create User
+								Create Auction
 							</Text>
 						</Pressable>
 					</View>

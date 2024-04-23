@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Layout from '../../../../components/Layout';
 import { Checkbox, DataTable } from 'react-native-paper';
 import {
+	useApproveAuction,
 	useAuctionData,
 	useDeleteAuction,
 } from '../../../../hooks/use-auction-data';
@@ -19,6 +20,9 @@ const Aunction = () => {
 		numberOfItemsPerPageList[0]
 	);
 	const queryClient = useQueryClient();
+	const { data, error, status } = useAuctionData(page + 1, itemsPerPage);
+	const { mutate: deleteAuction } = useDeleteAuction();
+	const { mutate: approveAuction } = useApproveAuction();
 
 	const from = page * itemsPerPage;
 	const to = Math.min(
@@ -28,8 +32,6 @@ const Aunction = () => {
 
 	const [selectedList, setSelectedList] = useState([]);
 	const [selectedAll, setSelectedAll] = useState(false);
-	const { data, error, status } = useAuctionData(page + 1, itemsPerPage);
-	const { mutate: deleteAuction } = useDeleteAuction();
 
 	const handleConfirmDelete = () => {
 		if (selectedAll || selectedList?.length > 0) {
@@ -69,11 +71,14 @@ const Aunction = () => {
 	const handleDelete = () => {
 		if (selectedAll) {
 			data?.content.forEach((item) => {
-				const deletedId = item.id
-				deleteAuction({deletedId});
+				const id = item.id.toString();
+				deleteAuction({ id });
 			});
 		} else if (selectedList?.length > 0) {
-			selectedList.forEach((item) => deleteAuction({item}));
+			selectedList.forEach((item) => {
+				const id = item.id.toString();
+				deleteAuction({ id });
+			});
 		}
 		setSelectedAll(false);
 		setSelectedList([]);
@@ -88,7 +93,26 @@ const Aunction = () => {
 			updatedList.push(id);
 		}
 		setSelectedList(updatedList);
-		console.log(updatedList);
+	};
+
+	const handleApprove = () => {
+		if (selectedAll) {
+			data?.content.forEach((item) => {
+				const auction = item;
+				approveAuction({ auction });
+			});
+		} else if (selectedList?.length > 0) {
+			selectedList.forEach((item) => {
+				if(item.status === "END"){
+					console.log('ended cannot edit')
+					return
+				}
+				const auction = {...item, ['approved'] : true}
+				approveAuction({auction});
+			});
+		}
+		setSelectedAll(false);
+		setSelectedList([]);
 	};
 
 	return (
@@ -115,6 +139,17 @@ const Aunction = () => {
 						<AntDesign name='delete' size={32} color='black' />
 					</RoundedButton>
 					<Text className='font-medium'>Delete selected</Text>
+				</View>
+				<View className='flex items-center '>
+					<RoundedButton
+						size='lg'
+						onPress={() => {
+							handleApprove();
+						}}
+					>
+						<AntDesign name='check' size={32} color='black' />
+					</RoundedButton>
+					<Text className='font-medium'>Approve selected</Text>
 				</View>
 			</View>
 
@@ -150,12 +185,12 @@ const Aunction = () => {
 							<View className='flex flex-row items-center justify-start '>
 								<Checkbox
 									status={
-										selectedList.indexOf(item.id) > -1 ||
+										selectedList.indexOf(item) > -1 ||
 										selectedAll
 											? 'checked'
 											: 'unchecked'
 									}
-									onPress={() => handleChecked(item.id)}
+									onPress={() => handleChecked(item)}
 								/>
 							</View>
 							<View className='flex flex-row items-center justify-start w-6'>
