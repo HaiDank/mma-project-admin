@@ -143,7 +143,7 @@ const TabsLayout = () => {
 					}}
 				/>
 				<Tabs.Screen
-					name='(admin)/order/index'
+					name='(admin)/order'
 					options={{
 						title: 'Order',
 						tabBarIcon: ({ color, focused }) => (

@@ -5,7 +5,7 @@ import { getTransaction } from "../api/transaction";
 export const transactionData = (
   page = 0,
   per_page = 3,
-  sortBy = "",
+  sortBy = "id",
   sortDir = "ASC",
   walledId = "",
   paymentMethod = "CARD",

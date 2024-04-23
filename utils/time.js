@@ -1,4 +1,8 @@
+export const displayDate = (tzTime) => {
+	const date = new Date(tzTime)
 
+	console.log(date, tzTime)
+}
 
 export const displayDateOfBirth = (tzTime) => {
 	const date = new Date(tzTime);

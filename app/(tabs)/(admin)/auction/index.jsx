@@ -1,27 +1,124 @@
-import { View, Text } from 'react-native'
-import React, { useState } from 'react'
-import Layout from '../../../../components/Layout'
-import { Checkbox, DataTable } from 'react-native-paper'
+import { View, Text, ActivityIndicator, Alert } from 'react-native';
+import React, { useState } from 'react';
+import Layout from '../../../../components/Layout';
+import { Checkbox, DataTable } from 'react-native-paper';
+import {
+	useAuctionData,
+	useDeleteAuction,
+} from '../../../../hooks/use-auction-data';
+import RoundedButton from '../../../../components/RoundedButton';
+import { AntDesign } from '@expo/vector-icons';
+import { useQueryClient } from '@tanstack/react-query';
+import { router } from 'expo-router';
 
 const Aunction = () => {
-
-  const [page, setPage] = useState(0);
+	const [page, setPage] = useState(0);
 
 	const [numberOfItemsPerPageList] = useState([2, 4, 6]);
 	const [itemsPerPage, onItemsPerPageChange] = useState(
 		numberOfItemsPerPageList[0]
 	);
+	const queryClient = useQueryClient();
+
+	const from = page * itemsPerPage;
+	const to = Math.min(
+		(page + 1) * itemsPerPage,
+		data?.totalElements ? data?.totalElements : 0
+	);
 
 	const [selectedList, setSelectedList] = useState([]);
 	const [selectedAll, setSelectedAll] = useState(false);
 	const { data, error, status } = useAuctionData(page + 1, itemsPerPage);
+	const { mutate: deleteAuction } = useDeleteAuction();
 
-  return (
-    <Layout>
+	const handleConfirmDelete = () => {
+		if (selectedAll || selectedList?.length > 0) {
+			Alert.alert(
+				'',
+				'Are you sure you want to delete the selected auction?',
+				[
+					{
+						text: 'Cancel',
+						onPress: () => console.log('Cancel Pressed'),
+						style: 'cancel',
+					},
+					{ text: 'Confirm', onPress: () => handleDelete() },
+				],
+				{
+					cancelable: true,
+				}
+			);
+		} else {
+			Alert.alert(
+				'',
+				'There is no selected item',
+				[
+					{
+						text: 'Ok',
+						onPress: () => console.log('Cancel Pressed'),
+						style: 'cancel',
+					},
+				],
+				{
+					cancelable: true,
+				}
+			);
+		}
+	};
 
-      <Text>Aunction</Text>
+	const handleDelete = () => {
+		if (selectedAll) {
+			data?.content.forEach((item) => {
+				const deletedId = item.id
+				deleteAuction({deletedId});
+			});
+		} else if (selectedList?.length > 0) {
+			selectedList.forEach((item) => deleteAuction({item}));
+		}
+		setSelectedAll(false);
+		setSelectedList([]);
+	};
 
-      <DataTable style={{ backgroundColor: '#fff', borderRadius: 24 }}>
+	const handleChecked = (id) => {
+		const updatedList = [...selectedList];
+		const index = updatedList.findIndex((item) => item === id);
+		if (index > -1) {
+			updatedList.splice(index, 1);
+		} else {
+			updatedList.push(id);
+		}
+		setSelectedList(updatedList);
+		console.log(updatedList);
+	};
+
+	return (
+		<Layout>
+			<View className='flex flex-row items-center my-4 gap-x-4'>
+				<View className='flex items-center '>
+					<RoundedButton
+						size='lg'
+						onPress={() => {
+							router.push('auction/create-auction');
+						}}
+					>
+						<AntDesign name='plus' size={32} color='black' />
+					</RoundedButton>
+					<Text className='font-medium'>Create auction</Text>
+				</View>
+				<View className='flex items-center '>
+					<RoundedButton
+						size='lg'
+						onPress={() => {
+							handleConfirmDelete();
+						}}
+					>
+						<AntDesign name='delete' size={32} color='black' />
+					</RoundedButton>
+					<Text className='font-medium'>Delete selected</Text>
+				</View>
+			</View>
+
+			<DataTable style={{ backgroundColor: '#fff', borderRadius: 24 }}>
 				<DataTable.Header>
 					<View className='flex flex-row items-center justify-start '>
 						<Checkbox
@@ -35,10 +132,10 @@ const Aunction = () => {
 						<Text className='text-neutral-600'>ID</Text>
 					</View>
 					{/* <DataTable.Title >ID</DataTable.Title> */}
-					<DataTable.Title>Email</DataTable.Title>
-					<DataTable.Title>Name</DataTable.Title>
-					<DataTable.Title>Gender</DataTable.Title>
-					<DataTable.Title>Date of Birth</DataTable.Title>
+					<DataTable.Title>Title</DataTable.Title>
+					<DataTable.Title>Product Name</DataTable.Title>
+					<DataTable.Title>Approved</DataTable.Title>
+					<DataTable.Title>Status</DataTable.Title>
 				</DataTable.Header>
 
 				{data?.content &&
@@ -46,7 +143,7 @@ const Aunction = () => {
 						<DataTable.Row
 							key={item.id}
 							onPress={() => {
-								router.push(`user/${item.id}`);
+								router.push(`auction/${item.id}`);
 							}}
 						>
 							{/* <DataTable.Cell >{item.id}</DataTable.Cell> */}
@@ -64,12 +161,12 @@ const Aunction = () => {
 							<View className='flex flex-row items-center justify-start w-6'>
 								<Text>{item.id}</Text>
 							</View>
-							<DataTable.Cell>{item.email}</DataTable.Cell>
-							<DataTable.Cell>{item.name}</DataTable.Cell>
-							<DataTable.Cell>{item.gender}</DataTable.Cell>
+							<DataTable.Cell>{item.title}</DataTable.Cell>
+							<DataTable.Cell>{item.productName}</DataTable.Cell>
 							<DataTable.Cell>
-								{item.dob ? displayDateOfBirth(item.dob) : ''}
+								{item.approved ? 'Approved' : 'Not'}
 							</DataTable.Cell>
+							<DataTable.Cell>{item.status}</DataTable.Cell>
 						</DataTable.Row>
 					))}
 
@@ -97,7 +194,7 @@ const Aunction = () => {
 						size='sm'
 						onPress={() =>
 							queryClient.invalidateQueries({
-								queryKey: ['users'],
+								queryKey: ['auctions'],
 							})
 						}
 					>
@@ -105,8 +202,8 @@ const Aunction = () => {
 					</RoundedButton>
 				</View>
 			</DataTable>
-    </Layout>
-  )
-}
+		</Layout>
+	);
+};
 
-export default Aunction
+export default Aunction;

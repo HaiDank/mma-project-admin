@@ -60,7 +60,7 @@ export const useOneUserData = (id) => {
 	});
 };
 
-export const useDeleteUser = (id) => {
+export const useDeleteUser = () => {
 	const { authState } = useAuthContext();
 
 	const queryClient = useQueryClient();
