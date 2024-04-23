@@ -1,6 +1,7 @@
 import { View, Text, Image, Button, ScrollView, Alert } from 'react-native';
 import React, { useEffect } from 'react';
 import {
+	useApproveAuction,
 	useDeleteAuction,
 	useOneAuctionData,
 } from '../../../../hooks/use-auction-data';
@@ -11,6 +12,7 @@ import { displayDate, displayDateOfBirth } from '../../../../utils/time';
 const AuctionDetails = () => {
 	const { id } = useLocalSearchParams();
 	const { mutate: deleteAuction } = useDeleteAuction();
+	const { mutate: approveAuction } = useApproveAuction();
 
 	const { data, error, status } = useOneAuctionData(id);
 
@@ -56,7 +58,8 @@ const AuctionDetails = () => {
 	};
 
 	const handleApprove = () => {
-		approveAuction(id);
+		const auction = data?.payload
+		approveAuction({auction});
 		router.back();
 	};
 
@@ -80,7 +83,7 @@ const AuctionDetails = () => {
 					<View className='flex flex-row items-center '>
 						<Text className='font-medium'>Auction Title: </Text>
 						<Text className='text-lg'>
-							{data?.payload?.productName}
+							{data?.payload?.title}
 						</Text>
 					</View>
 

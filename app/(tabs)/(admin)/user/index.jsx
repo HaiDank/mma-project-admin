@@ -47,14 +47,17 @@ const UserDataScreen = () => {
 		console.log(selectedList);
 		if (selectedAll) {
 			data?.content.forEach((item) => {
-				const deletedId = item.id
-				deleteUser({deletedId});
+				const id = item.id.toString();
+				deleteUser({ id });
 			});
 		} else if (selectedList?.length > 0) {
-			selectedList.forEach((item) => deleteUser({item}));
+			selectedList.forEach((item) => {
+				const id = item.toString();
+				deleteUser({ id });
+			});
 		}
-		setSelectedAll(false)
-		setSelectedList([])
+		setSelectedAll(false);
+		setSelectedList([]);
 	};
 
 	const handleConfirmDelete = () => {

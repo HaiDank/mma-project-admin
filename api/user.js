@@ -98,7 +98,7 @@ export const deleteUser = async (token, id) => {
 			}
 		})
 		.then((res) => {
-			console.log(res);
+			console.log(res.data);
 			return res;
 		})
 		.catch((err) => {
@@ -117,15 +117,24 @@ export const registerUser = async (
 	banned = false,
 	image_url
 ) => {
+	console.log('api ',{
+		email: email,
+		password: password,
+		name: name,
+		dob: dob.toISOString(),
+		gender: gender,
+		banned: banned,
+		image_url: image_url,
+	})
 	const result = await axios
 		.post(BASE_URL + POST_USER_REGISTER_URL, {
-			email,
-			password,
-			name,
-			dob,
-			gender,
-			banned,
-			image_url,
+			email: email,
+			password: password,
+			name: name,
+			dob: dob.toISOString(),
+			gender: gender,
+			banned: banned,
+			image_url: image_url,
 		})
 		.then((res) => {
 			console.log(res);

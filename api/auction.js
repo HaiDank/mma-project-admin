@@ -20,7 +20,6 @@ export const fetchAuctions = async (token, page, per_page, sortBy, sortDir) => {
 			}
 		)
 		.then((res) => {
-			console.log('get uaction', res.data.payload);
 			return res.data.payload;
 		})
 		.catch((err) => {
@@ -62,11 +61,11 @@ export const deleteAuction = async (token, id) => {
 	return result;
 };
 
-export const updateAuctionById = async (token) => {
+export const updateAuctionById = async (token, auction) => {
 	const result = await axios
 		.put(
-			BASE_URL + PUT_UPDATE_AUCTION_URL + id,
-			{},
+			BASE_URL + PUT_UPDATE_AUCTION_URL + auction.id,
+			{ auction },
 			{
 				headers: {
 					Authorization: 'Bearer ' + token,
@@ -74,7 +73,7 @@ export const updateAuctionById = async (token) => {
 			}
 		)
 		.then((res) => {
-			console.log(res);
+			console.log(res.data);
 			return res;
 		})
 		.catch((err) => {
@@ -96,7 +95,6 @@ export const createAuction = async (
 	productID,
 	image_url
 ) => {
-	
 	const result = await axios
 		.post(
 			BASE_URL + POST_CREATE_AUCTION_URL,

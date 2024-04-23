@@ -13,6 +13,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
 import { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import { displayDateOfBirth } from '../../../../utils/time';
+import { Checkbox } from 'react-native-paper';
+import { useCreateUser } from '../../../../hooks/use-user-data';
 
 const CreateUser = () => {
 	const { error } = useLocalSearchParams();
@@ -24,24 +27,26 @@ const CreateUser = () => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [name, setName] = useState('');
-	const [gender, setGender] = useState('');
-	const [img, setImg] = useState('');
+	const [gender, setGender] = useState('MALE');
+	const [image_url, setImg] = useState('https://picsum.photos/200/300');
 	const [dob, setDob] = useState('');
 	const [errorMsg, setErrorMsg] = useState(error ? error : '');
 
 	const passwordInputRef = useRef();
 	const emailInputRef = useRef();
 
+	const { mutate: registerUser } = useCreateUser();
+
 	const onChange = (event, selectedDate) => {
 		const currentDate = selectedDate;
-		setDate(currentDate);
-		console.log(currentDate)
+		setDob(currentDate);
 	};
 
 	const showMode = () => {
 		DateTimePickerAndroid.open({
 			value: date,
 			onChange,
+			maximumDate: date,
 			mode: 'date',
 			is24Hour: true,
 		});
@@ -72,15 +77,15 @@ const CreateUser = () => {
 			return false;
 		}
 		if (!name) {
-			setErrorMsg('Please enter a password');
+			setErrorMsg('Please enter a name');
 			return false;
 		}
 		if (!dob) {
-			setErrorMsg('Please enter a password');
+			setErrorMsg('Please enter a birth date');
 			return false;
 		}
 		if (!gender) {
-			setErrorMsg('Please enter a password');
+			setErrorMsg('Please select gender');
 			return false;
 		}
 		setErrorMsg('');
@@ -91,6 +96,8 @@ const CreateUser = () => {
 		const validationResult = validateForm();
 
 		if (validationResult) {
+			registerUser({ email, password, name, dob, gender, image_url });
+			// router.back()
 		}
 	};
 
@@ -166,7 +173,9 @@ const CreateUser = () => {
 						className='p-4 text-lg font-medium border border-white rounded-xl focus:border-black bg-neutral-200 focus:bg-transparent'
 					></TextInput>
 					<Pressable
-						onPress={()=>{setShowConfirmPassword(prev => !prev)}}
+						onPress={() => {
+							setShowConfirmPassword((prev) => !prev);
+						}}
 						className='absolute z-10 p-3 right-2 top-2'
 					>
 						{showConfirmPassword ? (
@@ -186,17 +195,42 @@ const CreateUser = () => {
 					className='p-4 text-lg font-medium border border-white rounded-xl focus:border-black bg-neutral-200 focus:bg-transparent'
 				></TextInput>
 
-				<View className='relative w-full '>
-					<Text>Date of Birth: </Text>
-					<Pressable
-						onPress={showMode}
-						className=''
-					>
-                        <Text>
+				<Pressable onPress={() => showMode()}>
+					<Text className='mb-2 text-sm font-semibold'>
+						Date of Birth
+					</Text>
+					<TextInput
+						placeholder='Date of Birth'
+						textContentType='birthdate'
+						value={dob ? displayDateOfBirth(dob) : ''}
+						editable={false}
+						className='p-4 text-lg font-medium text-black border border-white rounded-xl focus:border-black bg-neutral-200 focus:bg-transparent'
+						onSubmitEditing={() => handleSubmitEditing()}
+					/>
+				</Pressable>
 
-						Select date
-                        </Text>
-					</Pressable>
+				<View className='flex flex-row items-center gap-x-4'>
+					<Text className='mb-2 text-sm font-semibold'>Gender:</Text>
+					<View className='flex flex-row items-center'>
+						<Checkbox
+							status={
+								gender === 'FEMALE' ? 'checked' : 'unchecked'
+							}
+							onPress={() => {
+								setGender('FEMALE');
+							}}
+						/>
+						<Text>Female</Text>
+					</View>
+					<View className='flex flex-row items-center'>
+						<Checkbox
+							status={gender === 'MALE' ? 'checked' : 'unchecked'}
+							onPress={() => {
+								setGender('MALE');
+							}}
+						/>
+						<Text>Male</Text>
+					</View>
 				</View>
 
 				<View>

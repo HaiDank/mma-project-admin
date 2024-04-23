@@ -5,7 +5,7 @@ import {
 	useQueryClient,
 } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
-import { createAuction, deleteAuction, fetchAuctionById, fetchAuctions } from '../api/auction';
+import { createAuction, deleteAuction, fetchAuctionById, fetchAuctions, updateAuctionById } from '../api/auction';
 
 export const useAuctionData = (
 	page,
@@ -52,6 +52,22 @@ export const useDeleteAuction = () => {
 		},
 	});
 };
+
+export const useApproveAuction = () => {
+	const { authState } = useAuthContext();
+
+	const queryClient = useQueryClient();
+	const { token } = authState;
+
+	return useMutation({
+		mutationFn: ({ auction }) => updateAuctionById(token, auction),
+		onSuccess: (data, variables, context) => {
+			console.log('auction edited, invalidating')
+			queryClient.invalidateQueries({ queryKey: ['auctions'] });
+			queryClient.invalidateQueries({ queryKey: ['auction', id] });
+		},
+	});
+}
 
 export const useCreateAuction = () => {
 	const { authState } = useAuthContext();
