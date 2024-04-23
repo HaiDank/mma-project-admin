@@ -5,7 +5,14 @@ import {
 	useQueryClient,
 } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
-import { createAuction, deleteAuction, fetchAuctionById, fetchAuctions, updateAuctionById } from '../api/auction';
+import {
+	createAuction,
+	deleteAuction,
+	fetchAuctionById,
+	fetchAuctions,
+	updateAuctionById,
+} from '../api/auction';
+import { Alert } from 'react-native';
 
 export const useAuctionData = (
 	page,
@@ -47,6 +54,20 @@ export const useDeleteAuction = () => {
 	return useMutation({
 		mutationFn: ({ id }) => deleteAuction(token, id),
 		onSuccess: (data, variables, context) => {
+			Alert.alert(
+				'',
+				'Auction deleted!',
+				[
+					{
+						text: 'Ok',
+						onPress: () => console.log('Cancel Pressed'),
+						style: 'cancel',
+					},
+				],
+				{
+					cancelable: true,
+				}
+			);
 			queryClient.invalidateQueries({ queryKey: ['auctions'] });
 			queryClient.invalidateQueries({ queryKey: ['auction', id] });
 		},
@@ -62,12 +83,26 @@ export const useApproveAuction = () => {
 	return useMutation({
 		mutationFn: ({ auction }) => updateAuctionById(token, auction),
 		onSuccess: (data, variables, context) => {
-			console.log('auction edited, invalidating')
+			console.log('auction edited, invalidating');
+			Alert.alert(
+				'',
+				'Auction validated',
+				[
+					{
+						text: 'Ok',
+						onPress: () => console.log('Cancel Pressed'),
+						style: 'cancel',
+					},
+				],
+				{
+					cancelable: true,
+				}
+			);
 			queryClient.invalidateQueries({ queryKey: ['auctions'] });
 			queryClient.invalidateQueries({ queryKey: ['auction', id] });
 		},
 	});
-}
+};
 
 export const useCreateAuction = () => {
 	const { authState } = useAuthContext();
@@ -86,16 +121,34 @@ export const useCreateAuction = () => {
 			remindAt,
 			productID,
 			image_url,
-		}) => createAuction(token, endDate,
-			startDate,
-			title,
-			depositPrice,
-			quantity,
-			startPrice,
-			remindAt,
-			productID,
-			image_url,),
+		}) =>
+			createAuction(
+				token,
+				endDate,
+				startDate,
+				title,
+				depositPrice,
+				quantity,
+				startPrice,
+				remindAt,
+				productID,
+				image_url
+			),
 		onSuccess: (data, variables, context) => {
+			Alert.alert(
+				'',
+				'Auction created!',
+				[
+					{
+						text: 'Ok',
+						onPress: () => console.log('Cancel Pressed'),
+						style: 'cancel',
+					},
+				],
+				{
+					cancelable: true,
+				}
+			);
 			queryClient.invalidateQueries({ queryKey: ['auctions'] });
 			queryClient.invalidateQueries({ queryKey: ['auction', id] });
 		},

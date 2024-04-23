@@ -9,7 +9,12 @@ const Home = () => {
 
 	return (
 		<Layout>
-
+			<View className='flex items-center justify-center h-[70vh] '>
+				<Text className='text-3xl font-semibold'>Welcome Admin!</Text>
+				<Text className='text-lg'>
+					Press any of the bottom tab to begin your work
+				</Text>
+			</View>
 		</Layout>
 	);
 };

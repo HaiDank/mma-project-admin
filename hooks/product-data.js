@@ -1,6 +1,6 @@
 import { keepPreviousData, useMutation, useQuery,useQueryClient } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
-import { deleteProduct, getProducts, getProductById } from '../api/product';
+import { deleteProduct, getProducts, getProductById, createProduct } from '../api/product';
 
 export const productData = (page = 0, per_page = 3, sortBy = 'id',sortDir = 'ASC',productName = '',code = '',categoryId = '',active = 'true', quantity = '', description = '',) => {
     const { authState } = useAuthContext();
@@ -50,6 +50,20 @@ export const useDeleteProduct = () => {
 
 	return useMutation({
         mutationFn: ({ id }) => deleteProduct(token, id),
+		onSuccess: (data, variables, context) => {
+			queryClient.invalidateQueries({ queryKey: ['products'] });
+		},
+	})
+}
+
+export const useCreateProduct = () => {
+
+	const {authState} = useAuthContext();
+    const queryClient = useQueryClient();
+	const {token} = authState;
+
+	return useMutation({
+        mutationFn: ({ product }) => createProduct(token, product),
 		onSuccess: (data, variables, context) => {
 			queryClient.invalidateQueries({ queryKey: ['products'] });
 		},

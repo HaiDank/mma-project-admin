@@ -96,6 +96,9 @@ const Transaction = () => {
 	}, [itemsPerPage]);
   return (
     <Layout>
+      <Text className='w-full my-2 text-3xl font-semibold text-center'>
+      Transaction
+      </Text>
       <DataTable style={{ backgroundColor: "#fff", borderRadius: 24 }}>
         <DataTable.Header>
           <View className="flex flex-row items-center justify-start ">

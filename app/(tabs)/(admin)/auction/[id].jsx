@@ -1,4 +1,4 @@
-import { View, Text, Image, Button, ScrollView, Alert } from 'react-native';
+import { View, Text, Image, Button, ScrollView, Alert, Pressable } from 'react-native';
 import React, { useEffect } from 'react';
 import {
 	useApproveAuction,
@@ -62,6 +62,10 @@ const AuctionDetails = () => {
 		approveAuction({auction});
 		router.back();
 	};
+
+	const handleViewProduct = () => {
+		router.push(`product/${data?.payload.productID}`)
+	}
 
 	// useEffect(() => {
 	// 	console.log(data);
@@ -174,10 +178,13 @@ const AuctionDetails = () => {
 						</View>
 					</View>
 
-					<View className='flex'>
+					<View className='flex flex-row items-center mb-4 gap-x-4'>
 						<Text className='text-sm font-bold text-neutral-500'>
 							Product info
 						</Text>
+						<Pressable className='px-4 py-2 border rounded-full' onPress={handleViewProduct}>
+							<Text>View product info</Text>
+						</Pressable>
 					</View>
 
 					{/* <View className='flex items-center self-center justify-center w-40 overflow-hidden aspect-square bg-neutral-400/50'>

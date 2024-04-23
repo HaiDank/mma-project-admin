@@ -117,6 +117,9 @@ const Aunction = () => {
 
 	return (
 		<Layout>
+			<Text className='w-full my-2 text-3xl font-semibold text-center'>
+      Auction
+      </Text>
 			<View className='flex flex-row items-center my-4 gap-x-4'>
 				<View className='flex items-center '>
 					<RoundedButton

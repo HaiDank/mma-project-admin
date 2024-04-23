@@ -1,16 +1,33 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Stack } from 'expo-router'
+import { View, Text } from 'react-native';
+import React from 'react';
+import { Stack } from 'expo-router';
 
 const ProductLayout = () => {
-  return (
-    <Stack initialRouteName='index'>
-        <Stack.Screen name='index' options={{headerShown:false}}/>
-        <Stack.Screen name='[id]' options={{headerShown: true , title: 'Product Details'}}/>
-        <Stack.Screen name='delete_product' options={{headerShown:true, headerTitle: 'Product Detail', headerShadowVisible: false}}/>
-        <Stack.Screen name='create_product' options={{headerShown:true, headerTitle: 'Create Product', headerShadowVisible: false}}/>
-    </Stack>
-  )
-}
+	return (
+		<Stack initialRouteName='index'>
+			<Stack.Screen name='index' options={{ headerShown: false }} />
+			<Stack.Screen
+				name='[id]'
+				options={{ headerShown: true, title: 'Product Details' }}
+			/>
+			<Stack.Screen
+				name='delete_product'
+				options={{
+					headerShown: true,
+					headerTitle: 'Product Detail',
+					headerShadowVisible: false,
+				}}
+			/>
+			<Stack.Screen
+				name='create_product'
+				options={{
+					headerShown: true,
+					headerTitle: 'Create Product',
+					headerShadowVisible: false,
+				}}
+			/>
+		</Stack>
+	);
+};
 
-export default ProductLayout
+export default ProductLayout;

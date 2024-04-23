@@ -12,8 +12,6 @@ const DeleteDetails = () => {
 
 	const { data, error, status } = useOneProductData(id);
 
-	console.log(data);
-
 	const handleConfirmDelete = () => {
 		Alert.alert(
 			'',

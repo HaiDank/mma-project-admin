@@ -12,42 +12,18 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { router, useLocalSearchParams } from 'expo-router';
-
+import { useCreateProduct } from '../../../../hooks/product-data';
 
 const CreateProduct = () => {
 	const { error } = useLocalSearchParams();
 
-	const [showPassword, setShowPassword] = useState(false);
-	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-	const [date, setDate] = useState(new Date(Date.now()));
 	const [productName, setProductName] = useState();
 	const [image, setImage] = useState('');
 	const [quantity, setQuantity] = useState('');
 	const [description, setDescription] = useState('');
 	const [errorMsg, setErrorMsg] = useState(error ? error : '');
 
-
-
-	// const onChange = (event, selectedDate) => {
-	// 	const currentDate = selectedDate;
-	// 	setDate(currentDate);
-	// 	console.log(currentDate)
-	// };
-
-	// const showMode = () => {
-	// 	DateTimePickerAndroid.open({
-	// 		value: date,
-	// 		onChange,
-	// 		mode: 'date',
-	// 		is24Hour: true,
-	// 	});
-	// };
-
-	// const handleState = () => {
-	// 	setShowPassword((showState) => {
-	// 		return !showState;
-	// 	});
-	// };
+	const { mutate: createProduct } = useCreateProduct();
 
 	const validateForm = () => {
 		if (!productName) {
@@ -74,6 +50,14 @@ const CreateProduct = () => {
 		const validationResult = validateForm();
 
 		if (validationResult) {
+			createProduct({
+				productName,
+				quantity,
+				description,
+				actived: true,
+				productImages: [{image_url: image_url}],
+				category_id,
+			});
 		}
 	};
 
@@ -93,7 +77,7 @@ const CreateProduct = () => {
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 					<TextInput
 						placeholder='Product Name'
-						textContentType='NameProduct'
+						textContentType='name'
 						autoCapitalize='none'
 						autoFocus
 						onSubmitEditing={() => handleSubmitEditing()}
@@ -110,7 +94,7 @@ const CreateProduct = () => {
 						onSubmitEditing={() => handleSubmitEditing()}
 						onChangeText={setImage}
 						value={image}
-						textContentType='ImageP'
+						textContentType='URL'
 						className='p-4 text-lg font-medium border border-white rounded-xl focus:border-black bg-neutral-200 focus:bg-transparent'
 					></TextInput>
 				</View>
@@ -128,7 +112,6 @@ const CreateProduct = () => {
 
 				<TextInput
 					placeholder='Description'
-					textContentType='decription'
 					onSubmitEditing={() => handleSubmitEditing()}
 					onChangeText={setDescription}
 					value={description}
@@ -141,7 +124,7 @@ const CreateProduct = () => {
 						className='flex items-center justify-center px-4 py-2 mb-4 border rounded-full'
 					>
 						<Text className='text-lg font-semibold text-black'>
-							Create 
+							Create
 						</Text>
 					</Pressable>
 				</View>

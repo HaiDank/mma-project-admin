@@ -1,39 +1,40 @@
 import axios from 'axios';
 
-import {BASE_URL,
-        GET_PRODUCTS_URL, 
-        GET_PRODUCTS_BY_ID_URL,
-        PUT_UPDATE_PRODUCT_URL,
-        POST_PRODUCT_URL,
-        POST_PRODUCT_COUNT_URL,
-        DELETE_PRODUCT_URL
+import {
+	BASE_URL,
+	GET_PRODUCTS_URL,
+	GET_PRODUCTS_BY_ID_URL,
+	PUT_UPDATE_PRODUCT_URL,
+	POST_PRODUCT_URL,
+	POST_PRODUCT_COUNT_URL,
+	DELETE_PRODUCT_URL,
 } from './constants';
 
 export const getProducts = async (
-    token,
-    page = 0,
-    per_page = 3,
-    sortBy = '',
-    sortDir = 'ASC',
-    productName = '',
-    code = '',
-    categoryId = '',
-    active = 'true',
-    quantity = '',
-    description = '',
+	token,
+	page = 0,
+	per_page = 3,
+	sortBy = '',
+	sortDir = 'ASC',
+	productName = '',
+	code = '',
+	categoryId = '',
+	active = 'true',
+	quantity = '',
+	description = ''
 ) => {
-    const result = await axios
-        .get(
-            BASE_URL + 
-                GET_PRODUCTS_URL +
-                `?page=${page}&per_page=${per_page}&sortBy=${sortBy}&sortDir=${sortDir}&productName=${productName}&code=${code}&categoryId${categoryId}&active${active}&quantity=${quantity}&description=${description}`,
-                {
-                    headers: {
-                        Authorization: 'Bearer ' + token,
-                    },
-                }
-        )
-        .then((res) => {
+	const result = await axios
+		.get(
+			BASE_URL +
+				GET_PRODUCTS_URL +
+				`?page=${page}&per_page=${per_page}&sortBy=${sortBy}&sortDir=${sortDir}&productName=${productName}&code=${code}&categoryId${categoryId}&active${active}&quantity=${quantity}&description=${description}`,
+			{
+				headers: {
+					Authorization: 'Bearer ' + token,
+				},
+			}
+		)
+		.then((res) => {
 			console.log('Product Api ', res.data);
 			return res.data.payload;
 		})
@@ -43,10 +44,60 @@ export const getProducts = async (
 			return [];
 		});
 	return result;
-}
-export const getProductById = async (id) => {
+};
+export const getProductById = async (token, id) => {
+    console.log('fetchproduct',id)
 	const result = await axios
-		.get(BASE_URL + GET_PRODUCTS_BY_ID_URL + id)
+		.get(BASE_URL + GET_PRODUCTS_BY_ID_URL + id, {
+			headers: { Authorization: 'Bearer ' + token },
+		})
+		.then((res) => {
+			console.log(res.data);
+			return res.data;
+		})
+		.catch((err) => {
+			console.log(err);
+			return err;
+		});
+	return result;
+};
+
+export const updateProduct = async ({
+	id,
+	productName,
+	quantity,
+	description,
+	actived = true,
+	productImages,
+	category_id,
+}) => {
+	try {
+		// Tạo một mảng mới để lưu trữ các hình ảnh theo định dạng mong muốn
+		const formattedImages = productImages.map((image) => ({
+			image_url: image.image_url,
+			image_code: image.image_code,
+		}));
+
+		const result = await axios.put(BASE_URL + PUT_UPDATE_PRODUCT_URL + id, {
+			productName: productName,
+			quantity: quantity,
+			description: description,
+			actived: actived,
+			productImages: formattedImages,
+			category_id: category_id,
+		});
+
+		console.log(result);
+		return result;
+	} catch (error) {
+		console.log(error);
+		return error;
+	}
+};
+
+export const deleteProduct = async (id) => {
+	const result = await axios
+		.delete(BASE_URL + DELETE_PRODUCT_URL + id)
 		.then((res) => {
 			console.log(res);
 			return res;
@@ -58,91 +109,34 @@ export const getProductById = async (id) => {
 	return result;
 };
 
-
-export const updateProduct = async ({
-    id,
-    productName,
-    quantity,
-    description,
-    actived = true,
-    productImages,
-    category_id,
-}) => {
-    try {
-        // Tạo một mảng mới để lưu trữ các hình ảnh theo định dạng mong muốn
-        const formattedImages = productImages.map(image => ({
-            image_url: image.image_url,
-            image_code: image.image_code,
-        }));
-
-        const result = await axios.put(
-            BASE_URL + PUT_UPDATE_PRODUCT_URL + id,
-            {
-                productName: productName,
-                quantity: quantity,
-                description: description,
-                actived: actived,
-                productImages: formattedImages,
-                category_id: category_id,
-            }
-        );
-
-        console.log(result);
-        return result;
-    } catch (error) {
-        console.log(error);
-        return error;
-    }
-};
-
-export const deleteProduct = async (id) => {
-    const result = await axios
-    .delete(BASE_URL + DELETE_PRODUCT_URL + id)
-    .then((res) => {
-        console.log(res);
-        return res;
-    }) 
-    .catch((err) => {
-        console.log(err);
-        return err;
-    });
-    return result;
-};
-
 export const createProduct = async ({
-    productName,
-    quantity,
-    description,
-    actived = true,
-    productImages,
-    category_id,
+	productName,
+	quantity,
+	description,
+	actived = true,
+	productImages,
+	category_id = 1,
 }) => {
-    try {
-        // Tạo một mảng mới để lưu trữ các hình ảnh theo định dạng mong muốn
-        const formattedImages = productImages.map(image => ({
-            image_url: image.image_url,
-            image_code: image.image_code,
-        }));
+	try {
+		// Tạo một mảng mới để lưu trữ các hình ảnh theo định dạng mong muốn
+		const formattedImages = productImages.map((image) => ({
+			image_url: image.image_url,
+			image_code: 'image',
+		}));
 
-        const result = await axios.post(
-            BASE_URL + POST_PRODUCT_URL,
-            {
-                productName: productName,
-                quantity: quantity,
-                description: description,
-                actived: actived,
-                productImages: formattedImages,
-                category_id: category_id,
-            }
-        );
+		const result = await axios.post(BASE_URL + POST_PRODUCT_URL, {
+			productName: productName,
+			quantity: quantity,
+			description: description,
+			actived: actived,
+			productImages: formattedImages,
+			category_id: category_id,
+		});
 
-        console.log(result);
-        return result;
-    } catch (error) {
-        console.log(error);
-        return error;
-    }
+		console.log(result);
+		return result;
+	} catch (error) {
+		console.log(error);
+		return error;
+	}
 };
-
-
-

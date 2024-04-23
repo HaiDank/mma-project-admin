@@ -1,18 +1,20 @@
-import { View, Text, ScrollView, Button } from 'react-native';
+import { View, Text, ScrollView, Button, Image } from 'react-native';
 import React, { useEffect } from 'react';
-import { useDeleteProduct, useOneProductData } from '../../../../hooks/product-data';
+import {
+	useDeleteProduct,
+	useOneProductData,
+} from '../../../../hooks/product-data';
 import { useLocalSearchParams } from 'expo-router';
 import Loader from '../../../../components/Loader';
+import { displayDateOfBirth } from '../../../../utils/time';
 
 const ProductDetails = () => {
+	const { id } = useLocalSearchParams();
 
-    const {id} = useLocalSearchParams()
+	const { data, error, status } = useOneProductData(id);
+	const { mutate: deleteProduct } = useDeleteProduct();
 
-    const {data, error, status} = useOneProductData(id)
-    const {mutate: deleteProduct} = useDeleteProduct()
-
-
-    const handleConfirmDelete = () => {
+	const handleConfirmDelete = () => {
 		Alert.alert(
 			'',
 			'Are you sure you want to delete this auction?',
@@ -31,13 +33,13 @@ const ProductDetails = () => {
 	};
 
 	const handleDelete = () => {
-		deleteProduct({id});
+		deleteProduct({ id });
 		router.back();
 	};
 
-    useEffect(()=>{
-        console.log(data)
-    },[data])
+	useEffect(() => {
+		console.log(data);
+	}, [data]);
 
 	return (
 		<View className='flex-1 w-full h-full'>
@@ -58,11 +60,14 @@ const ProductDetails = () => {
 						</Text>
 					</View>
 
-					{/* <View className='flex items-center self-center justify-center w-40 overflow-hidden aspect-square bg-neutral-400/50'>
-						{data?.payload?.image_url ? (
+					<View className='flex items-center self-center justify-center w-40 overflow-hidden aspect-square bg-neutral-400/50'>
+						{data?.payload.productImages[0].image_url ? (
 							<Image
 								className='w-full h-full'
-								source={{ uri: data?.payload?.image_url }}
+								source={{
+									uri: data?.payload.productImages[0]
+										.image_url,
+								}}
 								resizeMode='cover'
 							/>
 						) : (
@@ -75,22 +80,22 @@ const ProductDetails = () => {
 						<View className='flex flex-row items-center flex-1'>
 							<Text className='font-medium'>Product Name: </Text>
 							<Text className='text-lg'>
-								{data?.payload?.title}
+								{data?.payload?.productName}
 							</Text>
 						</View>
-						<View className='flex flex-row items-center flex-1'>
+						
+					</View>
+                    <View className='flex flex-row items-center flex-1'>
 							<Text className='font-medium'>Quantity: </Text>
 							<Text className='text-lg'>
 								{data?.payload?.quantity}
 							</Text>
 						</View>
-					</View>
-
 					<View className='flex flex-row items-center w-full '>
 						<View className='flex flex-row items-center flex-1'>
 							<Text className='font-medium'>Created At: </Text>
 							<Text className='text-lg'>
-								{data?.payload?.startDate
+								{data?.payload?.created_at
 									? displayDateOfBirth(
 											data?.payload?.created_at
 									  )
@@ -100,19 +105,35 @@ const ProductDetails = () => {
 						<View className='flex flex-row items-center flex-1'>
 							<Text className='font-medium'>Updated At: </Text>
 							<Text className='text-lg'>
-								{data?.payload?.endDate
+								{data?.payload?.updated_at
 									? displayDateOfBirth(
 											data?.payload?.updated_at
 									  )
 									: ''}
 							</Text>
 						</View>
-					</View> */}
-					
+					</View>
+
+					<View className='flex flex-row items-start w-[68vw]'>
+						<Text className='font-medium'>Description: </Text>
+						<Text className='break-words'>
+							{data?.payload?.description}
+						</Text>
+					</View>
+
+					{!data?.payload?.actived && (
+						<View className='flex '>
+							<Button
+								onPress={handleConfirmDelete}
+								title='Approve Product'
+								color={'green'}
+							></Button>
+						</View>
+					)}
 					<View className='flex '>
 						<Button
 							onPress={handleConfirmDelete}
-							title='Delete User'
+							title='Delete Product'
 							color={'red'}
 						></Button>
 					</View>
