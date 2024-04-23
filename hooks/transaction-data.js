@@ -5,9 +5,9 @@ import { getTransaction } from "../api/transaction";
 export const transactionData = (
   page = 0,
   per_page = 3,
-  sortBy = "id",
-  sortDir = "ASC",
-  walledId = "",
+  sortBy = "",
+  sortDir = "",
+  walledId = "2",
   paymentMethod = "CARD",
   status = "PENDING",
   content = '',
