@@ -11,7 +11,7 @@ import { router } from "expo-router";
 const Product = () => {
   const [page, setPage] = useState(0);
 
-  const [numberOfItemsPerPageList] = useState([1, 2, 3]);
+  const [numberOfItemsPerPageList] = useState([2,4,6]);
   const [itemsPerPage, onItemsPerPageChange] = useState(
     numberOfItemsPerPageList[0]
   );

@@ -14,12 +14,6 @@ export const productData = (page = 0, per_page = 3, sortBy = 'id',sortDir = 'ASC
             per_page,
             sortBy,
             sortDir,
-            productName,
-            code,
-            categoryId,
-            active,
-            quantity,
-            description,
         ],
         queryFn: () =>
             getProducts(
@@ -28,12 +22,6 @@ export const productData = (page = 0, per_page = 3, sortBy = 'id',sortDir = 'ASC
                 per_page,
                 sortBy,
                 sortDir,
-                productName,
-                code,
-                categoryId,
-                active,
-                quantity,
-                description,
             ),
             placeholderData: keepPreviousData,
             enabled: !!token,
@@ -54,7 +42,7 @@ export const useOneProductData = (id) => {
 	});
 };
 
-export const useDeleteProduct = (id) => {
+export const useDeleteProduct = () => {
 
 	const {authState} = useAuthContext();
     const queryClient = useQueryClient();

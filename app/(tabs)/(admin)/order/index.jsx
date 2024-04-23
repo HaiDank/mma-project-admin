@@ -6,6 +6,7 @@ import RoundedButton from '../../../../components/RoundedButton';
 import { AntDesign } from '@expo/vector-icons';
 import { useOrderData } from '../../../../hooks/use-order-data';
 import { useQueryClient } from '@tanstack/react-query';
+import { router } from 'expo-router';
 
 const Order = () => {
 	const [page, setPage] = useState(0);
@@ -66,7 +67,7 @@ const Order = () => {
 						<DataTable.Row
 							key={item.id}
 							onPress={() => {
-								router.push(`auction/${item.id}`);
+								router.push(`order/${item.id}`);
 							}}
 						>
 							{/* <DataTable.Cell >{item.id}</DataTable.Cell> */}
@@ -119,7 +120,7 @@ const Order = () => {
 						size='sm'
 						onPress={() =>
 							queryClient.invalidateQueries({
-								queryKey: ['auctions'],
+								queryKey: ['orders'],
 							})
 						}
 					>

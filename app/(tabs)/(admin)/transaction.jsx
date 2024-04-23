@@ -119,9 +119,6 @@ const Transaction = () => {
           data.content.map((item) => (
             <DataTable.Row
               key={item.id}
-              onPress={() => {
-                router.push(`transaction/${item.id}`);
-              }}
             >
               {/* <DataTable.Cell >{item.id}</DataTable.Cell> */}
               <View className='flex flex-row items-center justify-start '>

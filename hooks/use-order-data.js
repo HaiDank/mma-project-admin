@@ -20,7 +20,7 @@ export const useOrderData = (
 	});
 };
 
-export const useOneAuctionData = (id) => {
+export const useOneOrderData = (id) => {
 	const { authState } = useAuthContext();
 	const { token } = authState;
 
