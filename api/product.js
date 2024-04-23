@@ -19,12 +19,14 @@ export const getProducts = async (
     code = '',
     categoryId = '',
     active = 'true',
+    quantity = '',
+    description = '',
 ) => {
     const result = await axios
         .get(
             BASE_URL + 
                 GET_PRODUCTS_URL +
-                `?page=${page}&per_page=${per_page}&sortBy=${sortBy}&sortDir=${sortDir}&productName=${productName}&code=${code}&categoryId${categoryId}&active${active}`,
+                `?page=${page}&per_page=${per_page}&sortBy=${sortBy}&sortDir=${sortDir}&productName=${productName}&code=${code}&categoryId${categoryId}&active${active}&quantity=${quantity}&description=${description}`,
                 {
                     headers: {
                         Authorization: 'Bearer ' + token,
@@ -32,7 +34,7 @@ export const getProducts = async (
                 }
         )
         .then((res) => {
-			console.log('asdaw ', res.data);
+			console.log('Product Api ', res.data);
 			return res.data.payload;
 		})
 		.catch((err) => {
