@@ -1,6 +1,7 @@
 import { keepPreviousData, useMutation, useQuery,useQueryClient } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
 import { deleteProduct, getProducts, getProductById, createProduct } from '../api/product';
+import { Alert } from 'react-native';
 
 export const productData = (page = 0, per_page = 3, sortBy = 'id',sortDir = 'ASC',productName = '',code = '',categoryId = '',active = 'true', quantity = '', description = '',) => {
     const { authState } = useAuthContext();
@@ -65,6 +66,20 @@ export const useCreateProduct = () => {
 	return useMutation({
         mutationFn: ({ product }) => createProduct(token, product),
 		onSuccess: (data, variables, context) => {
+            Alert.alert(
+				'',
+				'Product created successfully',
+				[
+					{
+						text: 'Ok',
+						onPress: () => console.log('Cancel Pressed'),
+						style: 'cancel',
+					},
+				],
+				{
+					cancelable: true,
+				}
+			);
 			queryClient.invalidateQueries({ queryKey: ['products'] });
 		},
 	})

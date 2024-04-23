@@ -97,7 +97,7 @@ const CreateUser = () => {
 
 		if (validationResult) {
 			registerUser({ email, password, name, dob, gender, image_url });
-			// router.back()
+			router.back()
 		}
 	};
 

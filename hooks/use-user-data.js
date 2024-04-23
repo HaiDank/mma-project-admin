@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
 import { deleteUser, getUserById, getUsers, registerUser } from '../api/user';
+import { Alert } from 'react-native';
 
 export const useUserData = (
 	page,
@@ -84,7 +85,20 @@ export const useCreateUser = () => {
 		mutationFn: ({ email, password, name, dob, gender, image_url }) =>
 			registerUser(email, password, name, dob, gender, false, image_url),
 		onSuccess: (data, variables, context) => {
-			console.log('adding' ,variables)
+			Alert.alert(
+				'',
+				'User created successfully',
+				[
+					{
+						text: 'Ok',
+						onPress: () => console.log('Cancel Pressed'),
+						style: 'cancel',
+					},
+				],
+				{
+					cancelable: true,
+				}
+			);
 			queryClient.invalidateQueries({ queryKey: ['users'] });
 		},
 	});

@@ -17,7 +17,7 @@ import { useCreateProduct } from '../../../../hooks/product-data';
 const CreateProduct = () => {
 	const { error } = useLocalSearchParams();
 
-	const [productName, setProductName] = useState();
+	const [productName, setProductName] = useState('');
 	const [image, setImage] = useState('');
 	const [quantity, setQuantity] = useState('');
 	const [description, setDescription] = useState('');
@@ -50,14 +50,16 @@ const CreateProduct = () => {
 		const validationResult = validateForm();
 
 		if (validationResult) {
-			createProduct({
-				productName,
-				quantity,
-				description,
+			const product = {
+				productName: productName,
+				quantity: quantity,
+				description: description,
 				actived: true,
-				productImages: [{image_url: image_url}],
-				category_id,
-			});
+				image: image,
+				category_id: 1,
+			};
+			createProduct( {product });
+			router.back()
 		}
 	};
 
@@ -105,7 +107,6 @@ const CreateProduct = () => {
 						onSubmitEditing={() => handleSubmitEditing()}
 						onChangeText={setQuantity}
 						value={quantity}
-						textContentType='number'
 						className='p-4 text-lg font-medium border border-white rounded-xl focus:border-black bg-neutral-200 focus:bg-transparent'
 					></TextInput>
 				</View>

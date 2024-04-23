@@ -103,12 +103,12 @@ const Aunction = () => {
 			});
 		} else if (selectedList?.length > 0) {
 			selectedList.forEach((item) => {
-				if(item.status === "END"){
-					console.log('ended cannot edit')
-					return
+				if (item.status === 'END') {
+					console.log('ended cannot edit');
+					return;
 				}
-				const auction = {...item, ['approved'] : true}
-				approveAuction({auction});
+				const auction = { ...item, ['approved']: true };
+				approveAuction({ auction });
 			});
 		}
 		setSelectedAll(false);
@@ -118,8 +118,8 @@ const Aunction = () => {
 	return (
 		<Layout>
 			<Text className='w-full my-2 text-3xl font-semibold text-center'>
-      Auction
-      </Text>
+				Auction
+			</Text>
 			<View className='flex flex-row items-center my-4 gap-x-4'>
 				<View className='flex items-center '>
 					<RoundedButton

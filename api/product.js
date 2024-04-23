@@ -46,7 +46,7 @@ export const getProducts = async (
 	return result;
 };
 export const getProductById = async (token, id) => {
-    console.log('fetchproduct',id)
+	console.log('fetchproduct', id);
 	const result = await axios
 		.get(BASE_URL + GET_PRODUCTS_BY_ID_URL + id, {
 			headers: { Authorization: 'Bearer ' + token },
@@ -109,31 +109,33 @@ export const deleteProduct = async (id) => {
 	return result;
 };
 
-export const createProduct = async ({
-	productName,
-	quantity,
-	description,
-	actived = true,
-	productImages,
-	category_id = 1,
-}) => {
+export const createProduct = async (token, product) => {
+	const { productName, quantity, description, actived, image, category_id } =
+		product;
 	try {
-		// Tạo một mảng mới để lưu trữ các hình ảnh theo định dạng mong muốn
-		const formattedImages = productImages.map((image) => ({
-			image_url: image.image_url,
-			image_code: 'image',
-		}));
+		const productImages = [
+			{
+				image_url: image,
+				image_code: 'string',
+			},
+		];
+		console.log('api', productImages)
+		const result = await axios.post(
+			BASE_URL + POST_PRODUCT_URL,
+			{
+				productName: productName,
+				quantity: quantity,
+				description: description,
+				actived: actived,
+				productImages: productImages,
+				category_id: category_id,
+			},
+			{
+				headers: { Authorization: 'Bearer ' + token },
+			}
+		);
 
-		const result = await axios.post(BASE_URL + POST_PRODUCT_URL, {
-			productName: productName,
-			quantity: quantity,
-			description: description,
-			actived: actived,
-			productImages: formattedImages,
-			category_id: category_id,
-		});
-
-		console.log(result);
+		console.log('craete product', result);
 		return result;
 	} catch (error) {
 		console.log(error);
